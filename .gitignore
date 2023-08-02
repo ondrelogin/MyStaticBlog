@@ -3,6 +3,16 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# custom modifications.start -----------------------
+
+# ignore launchSettings
+**/[Pp]roperties/[Ll]aunch[Ss]ettings.json
+
+# ignore static content
+[Ss]tatic-[Oo]utput/
+
+# custom modifications.end -------------------------
+
 # User-specific files
 *.rsuser
 *.suo
