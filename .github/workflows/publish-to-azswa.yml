@@ -1,0 +1,31 @@
+name: Build and Publish to Azure Static Web Apps
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Get source
+      uses: actions/checkout@v3
+    
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Get Dependencies
+      run: dotnet restore src/MyStaticBlog.sln
+      
+    - name: Run App
+      run: dotnet run src/MyStaticBlog.sln --project src/MyStaticBlogBuilder/
+    
+    - name: Deploy to Azure Static Web App
+      uses: azure/static-web-apps-deply@v1
+      with:
+        azure_static_web_apps_api_token: ${{ secrets.AZ_SWA_DEPLOY_TOKEN }}
+        repo_token: ${{ secrets.GITHUB_TOKEN }} # not sure if this is needed
+        action: "upload"
+        app_location: "static-output"
+        output_location: "static-output"
